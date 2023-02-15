@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    .container {
+        max-width: 1410px;
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+
+    body {
+        background: url('157_photo_xl.jpg')no-repeat;
+        background-size: cover;
+        font-family: Arial;
+    }
+
+    .cards-content {
+        background: rgba(255, 255, 255, 0.6);
+        width: 100%;
+        margin: 10px 0;
+        border-radius: 10px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 20px 40px;
+    }
+
+    .cards-content-item {
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        grid-template-areas:
+            "t1 t2"
+            "b1 b1"
+        ;
+        gap: 20px;
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        padding: 20px;
+    }
+
+    .cards-content-item div:nth-child(1) {
+        grid-area: t1;
+    }
+
+    .cards-content-item div:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        line-height: 25px;
+        grid-area: t2;
+    }
+
+    .cards-content-item div:nth-child(3) {
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+        line-height: 25px;
+        grid-area: b1;
+    }
+
+    .cards-content-item img {
+        width: 150px;
+        border-top-left-radius: 20px;
+    }
+
+    .name {
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    @media (max-width:976px) {
+        .cards-content {
+            grid-template-columns: repeat(1, 1fr);
+
+        }
+    }
+        @media (max-width:576px) {
+            .cards-content-item {
+                display: flex;
+                flex-direction: column;
+
+            }
+
+            .cards-content-item div:nth-child(1) {
+                text-align: center;
+
+            }
+
+            .cards-content-item img {
+                border-top-left-radius: 0px;
+            }
+
+            .cards-content-item div:nth-child(2) {
+                margin-left: 20px;
+            }
+        }
+</style>
+
+<body>
+    <div class="cards">
+        <div class="container">
+            <div class="cards-content">
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        let parentDiv = document.querySelectorAll('.cards-content')
+        async function getArray() {
+            let actorsArr = ['pantera.jpg', 'Clementine Bauch.jpg', 'superman.jpg', 'tonyStark.jpg', 'dedpull.jpg', 'Ervin Howell.jpg', 'Lauren-Graham.jpg', '1.jpg', 'tor.jpg', 'capAmerica.jpg']
+            let response = await fetch('https://jsonplaceholder.typicode.com/users')
+            let result = await response.json();
+            console.log(result);
+            for (const i in result) {
+                let items = document.querySelectorAll('.cards-content-item')
+                parentDiv[0].insertAdjacentHTML("beforeend",
+                    `
+                    <div class="cards-content-item">
+                        <div>
+                        <img src="${actorsArr[i]}" alt=""></div>
+                    <div>
+                        <h2 class="name">${result[i].name}</h2>
+                        <p class="username"><b>Username :</b> ${result[i].username}</p>
+                        <a href="tel:${result[i].phone}" class="phone"><b>Phone :</b> ${result[i].phone}</a>
+                        <a href="${result[i].website}" class="webside"><b>Website:</b> ${result[i].website}</a>
+                        <a href="mailto:${result[i].email}" class="email"><b>Email :</b> ${result[i].email}</a>
+                        <p class="company"><b>Company :</b> ${result[i].company.name}</p>
+                    </div>
+                    <div>
+                        <p><b>Street :</b> ${result[i].address.street}</p>
+                        <p><b>Suite :</b> ${result[i].address.suite}</p>
+                        <p><b>City :</b> ${result[i].address.city}</p>
+                        <p><b>Zipcode :</b> ${result[i].address.zipcode}</p>
+                        <p><b>Street :</b> ${result[i].address.street}</p>
+                    </div>
+                    </div>
+                    
+                `)
+            }
+        }
+        getArray()
+    </script>
+</body>
+
+</html>
